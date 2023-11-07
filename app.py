@@ -11,11 +11,6 @@ app = Flask(__name__)
 
 
 @app.get("/")
-@app.get("/hello")
-def hello():
-    return "Hello from my first web app - cool, isn't it?"  # ANY string.
-
-
 @app.get("/chart")
 def display_chart():
     (
