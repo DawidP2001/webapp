@@ -1,6 +1,4 @@
 from flask import Flask, render_template, request  # from module import Class.
-
-
 import os 
 
 import hfpy_utils
@@ -11,6 +9,25 @@ app = Flask(__name__)
 
 
 @app.get("/")
+@app.get("/getswimmers")
+def get_swimmers_names():
+    files = os.listdir(swim_utils.FOLDER)
+    files.remove(".DS_Store")
+    names = set()
+    for swimmer in files:
+        names.add(swim_utils.get_swimmers_data(swimmer)[0])
+    return render_template(
+        "select.html",
+        title="Select a swimmer to chart",
+        data=sorted(names),
+    )
+
+
+@app.post("/displayevents")
+def get_swimmer_events():
+    chosenName = request.form["swimmer"]
+    return chosenName
+
 @app.get("/chart")
 def display_chart():
     (
@@ -35,26 +52,6 @@ def display_chart():
         average=the_average,
         data=the_data,
     )
-
-
-@app.get("/getswimmers")
-def get_swimmers_names():
-    files = os.listdir(swim_utils.FOLDER)
-    files.remove(".DS_Store")
-    names = set()
-    for swimmer in files:
-        names.add(swim_utils.get_swimmers_data(swimmer)[0])
-    return render_template(
-        "select.html",
-        title="Select a swimmer to chart",
-        data=sorted(names),
-    )
-
-
-@app.post("/displayevents")
-def get_swimmer_events():
-    return request.form["swimmer"]
-
 
 if __name__ == "__main__":
     app.run(debug=True)  # Starts a local (test) webserver, and waits... forever.

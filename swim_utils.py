@@ -1,6 +1,4 @@
 from statistics import mean
-
-
 import hfpy_utils
 
 
