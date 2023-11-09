@@ -3,21 +3,21 @@
 
 {% block body %}
 
-    <form method="POST" action="/charts">
-        <label for="swimmer">Choose event:</label>
+<form method="POST" action="/charts">
+    <label for="swimmer">Choose event:</label>
 
-        <select name="event" id="event">
+    <select name="event" id="event">
 
-            {% for name in data %}
+        {% for name in data %}
 
-                <option value="{{name}}">{{ name }}</option>
-            
-            {% endfor %}
+        <option value="{{name}}">{{ name }}</option>
 
-        </select>
-        <p>
-            <input type="submit" value="Select">
-        </p>
-    </form>
+        {% endfor %}
+
+    </select>
+    <p>
+        <input type="submit" value="Select">
+    </p>
+</form>
 
 {% endblock %}
