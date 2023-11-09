@@ -26,9 +26,23 @@ def get_swimmers_names():
 @app.post("/displayevents")
 def get_swimmer_events():
     chosenName = request.form["swimmer"]
-    return chosenName
+    files = os.listdir(swim_utils.FOLDER)
+    files.remove(".DS_Store")
+    events = list()
+    for event in files:
+        if(swim_utils.get_swimmers_data(event)[0] == chosenName):
+            events.append(
+                swim_utils.get_swimmers_data(event)[1] + "-" +
+                swim_utils.get_swimmers_data(event)[2] + "-" +
+                swim_utils.get_swimmers_data(event)[3]
+                )
+    return render_template(
+        "select.html",
+        title="Select an event for " + chosenName + " to chart",
+        data=sorted(events) 
+    )
 
-@app.get("/chart")
+@app.post("/chart")
 def display_chart():
     (
         name,
