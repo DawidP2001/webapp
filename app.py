@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request  # from module import Class.
+from flask import Flask, render_template, request, session  # from module import Class.
 import os 
 
 import hfpy_utils
@@ -6,7 +6,7 @@ import swim_utils
 
 
 app = Flask(__name__)
-
+app.secret_key = ":)"
 
 @app.get("/")
 @app.get("/getswimmers")
@@ -26,6 +26,8 @@ def get_swimmers_names():
 @app.post("/displayevents")
 def get_swimmer_events():
     chosenName = request.form["swimmer"]
+    session["chosenName"] = chosenName
+    session.modified = True
     files = os.listdir(swim_utils.FOLDER)
     files.remove(".DS_Store")
     events = list()
@@ -44,6 +46,7 @@ def get_swimmer_events():
 
 @app.post("/charts")
 def display_chart():
+    chosenName = session["chosenName"]
     chosenEvent = request.form["event"]
     (
         name,
@@ -53,7 +56,7 @@ def display_chart():
         the_times,
         converts,
         the_average,
-    ) = swim_utils.get_swimmers_data("Darius-13-100m-Fly.txt")
+    ) = swim_utils.get_swimmers_data(chosenName + "-" + chosenEvent + ".txt")
 
     the_title = f"{name} (Under {age}) {distance} {stroke}"
     from_max = max(converts) + 50
