@@ -37,13 +37,14 @@ def get_swimmer_events():
                 swim_utils.get_swimmers_data(event)[3]
                 )
     return render_template(
-        "select.html",
+        "selectEvent.html",
         title="Select an event for " + chosenName + " to chart",
         data=sorted(events) 
     )
 
-@app.post("/chart")
+@app.post("/charts")
 def display_chart():
+    chosenEvent = request.form["event"]
     (
         name,
         age,

@@ -3,10 +3,10 @@
 
 {% block body %}
 
-    <form method="POST" action="/displayevents">
+    <form method="POST" action="/charts">
         <label for="swimmer">Choose event:</label>
 
-        <select name="swimmer" id="swimmer">
+        <select name="event" id="event">
 
             {% for name in data %}
 
