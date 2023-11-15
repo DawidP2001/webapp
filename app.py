@@ -62,7 +62,7 @@ def display_chart():
     from_max = max(converts) + 50
     the_converts = [ hfpy_utils.convert2range(n, 0, from_max, 0, 350) for n in converts ]
 
-    the_data = zip(the_converts, the_times)
+    the_data = zip(list(reversed(the_converts)), list(reversed(the_times)))
 
     return render_template(
         "chart.html",
